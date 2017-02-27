@@ -4,13 +4,28 @@ body, html {
   padding: 0px auto;
 }
 
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none !important;
+}
+
 .draggable {
   cursor: move;
 }
 
 .modal {
   display: block;
-  position: fixed;
+  position: absolute;;
   z-index: 0;
   top: 0;
   left: 0;
@@ -33,12 +48,6 @@ body.loading .modal {
 
 .manageBoat:hover, .manageUser:hover, .delete:hover {
   color: #23527c;
-}
-
-.addEvent {
-  position: absolute;
-  bottom: 10px;
-  left: 0px;
 }
 
 .selectMenu {
@@ -105,7 +114,7 @@ body.loading .modal {
           display: flex;
         }
 
-        .home { /* menu icon */
+        .home, .addEventButton { /* menu icon */
           margin: 16px;
         }
 
@@ -120,6 +129,7 @@ body.loading .modal {
         /* Sidenav */
         .nav-side-menu {
           background: #FAFAFA;
+          color: #212121;
           position: relative;
           z-index: 1;
           flex: 0 0 360px;
@@ -149,6 +159,11 @@ body.loading .modal {
             align-items: flex-start;
         }
 
+        .feedback:hover {
+          opacity: 0.8;
+          color: #FF5722;
+        }
+
         .card {
             background: white;
             width: 360px;
@@ -169,6 +184,7 @@ body.loading .modal {
 
         .subtitle {
             opacity: 0.7;
+            color: #212121;
         }
 
         .skipper {
@@ -243,13 +259,45 @@ body.loading .modal {
             box-shadow: 0 25px 55px 0 rgba(0, 0, 0, 0.21);
         }
 
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
+        .nav-side-menu a {
+          color: #212121;
         }
 
-        li {
-            margin: 0;
-            padding: 0;
+    /*    .nav-side-menu a:hover {
+          text-decoration: none;
+          color: #212121;
+        }*/
+
+        .nav-side-menu li {
+          padding: 15px 22px;
+        }
+
+        .nav-side-menu .openSubMenu {
+          font-weight: 700;
+        }
+
+        .nav-side-menu ul ul li {
+          padding: 10px 46px;
+        }
+
+        .SubMenu {
+          display: none;
+        }
+
+        .contentHeader {
+          width: 100%;
+          min-height: 10px;
+        }
+
+        .contentBody {
+          width: 100%;
+        }
+
+        .contentFooter {
+          width: 100%;
+          min-height: 50px;
+        }
+
+        .contentMargin {
+          margin: 10px 40px;
         }

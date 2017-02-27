@@ -6,6 +6,9 @@
 EFFECT_DROP = 'drop';
 EFFECT_ACCEPT = 'slide';
 
+EFFECT_SUBMENU_SHOW = 'blind';
+EFFECT_SUBMENU_HIDE = 'blind';
+
 ERROR_CODE = new Array(13);
 	ERROR_CODE[1] = 'Event is empty';
 	ERROR_CODE[10] = 'Could not save! <br />Boat is full';
@@ -38,6 +41,8 @@ $(document).ready(function() {
 	});
 
 	function init(event) {
+		$(".content").addClass('modal');
+
 	    $.getJSON('info.php', {get: 'init', event: event}, function(data) {
 
 	    	if(data.boat.length === 0 && data.person.length === 0) displayError(1);
@@ -75,7 +80,7 @@ $(document).ready(function() {
 	    	//end boatlist
 
 	    	//begin personlist
-	    	$(".nav-content").append('<i class="fa fa-bars fa-2x home subtitle" aria-hidden="true"></i>'); //Menu Icon
+	    	$(".nav-content").append('<i class="fa fa-bars fa-2x home subtitle feedback" aria-hidden="true"></i>'); //Menu Icon
 	    	$(".home").click(Menu);
 	    	$.each(data.person, function(key, value) {
 	    		if(!$('#job-'+value.IDJOB).exists()) {
@@ -86,8 +91,9 @@ $(document).ready(function() {
 																			'</div>');
 	    		}
 
-	    		var input = '<li data-idjob="'+value.IDJOB +'" data-idperson="'+value.IDPERSON+'" class="member draggable job-'+value.IDJOB +'" >'+value.FIRSTNAME+' '+value.LASTNAME+'</li>';
-	    		if(value.IDBOAT == null) $('.nav-content .list-'+value.IDJOB).append(input);
+	    		var input = '<li data-idjob="'+value.IDJOB +'" data-idperson="'+value.IDPERSON+'" class="feedback member draggable job-'+value.IDJOB +'" >'+value.FIRSTNAME+' '+value.LASTNAME+'</li>';
+
+					if(value.IDBOAT == null) $('.nav-content .list-'+value.IDJOB).append(input);
 	    		else $('#boat-'+value.IDBOAT+' .list-'+value.IDJOB).append(input);
 
 	    	});
@@ -191,6 +197,7 @@ $(document).ready(function() {
 					}// updateSize()
 		    }//dragDrop()
 		    dragDrop(); // re-init-drag&drop
+				$(".content").removeClass('modal');
 	    });//.getJSON
 	}//function init
 
@@ -219,20 +226,21 @@ $(document).ready(function() {
 	    		Yes: function () {
 	    			$.getJSON("info.php", obj, function(data) {
 	    				formBox.dialog('destroy');
-	    				if(data !== 0) displayError(data);
+							$(".content").html("");
+	    				if(!data) displayError(data);
 							else Menu();
 	    			});
 				},
 				Cancel: function () {
 					formBox.dialog('destroy');
-					Menu();
+					//Menu();
 				}
-			},
-			close: Menu
+			}
 		});
 	}//function confirmForm
 
 	function form(e, s, event) {  //e=description || event= EventID
+		$(".content").addClass('modal');
 		var content = "";
 		var panel = "";
 
@@ -243,8 +251,8 @@ $(document).ready(function() {
 				$.getJSON("info.php", obj, function(data) {
 
 					if(e === "user") {
-						panel = "<a class='addUser col-md-1 col-xs-1' href='' ><i class='fa fa-plus fa-2x' aria-hidden='true'></i></a>";
-						panel += "<a class='addUserCsv col-md-1 col-xs-1' href='' ><i class='fa fa-cloud-upload fa-2x' aria-hidden='true'></i></a>";
+						panel = "<a class='addUser col-md-1 col-xs-1' href='' ><i class='fa fa-plus fa-2x subtitle feedback' aria-hidden='true'></i></a>";
+						panel += "<a class='addUserCsv col-md-1 col-xs-1' href='' ><i class='fa fa-cloud-upload fa-2x subtitle feedback' aria-hidden='true'></i></a>";
 						content += "<table class='table table-striped'>";
 						content += "<tr><th>Firstname</th><th>Lastname</th><th>Job</th><th>Delete</th></tr>";
 						$.each(data, function(key, value) {
@@ -260,21 +268,21 @@ $(document).ready(function() {
 												"<div id='JOB-"+value.IDJOB+"-"+event+"' class='edit edit-person-select'>"+value.TITLE+"</div>"+
 											"</td>"+
 											"<td class='editTable'>"+
-												"<a class='delete delete-user' href='"+value.IDPERSON+"'><i class='fa fa-2x fa-trash' aria-hidden='true'></i></a>"+
+												"<a class='delete delete-user' href='"+value.IDPERSON+"'><i class='fa fa-2x fa-trash subtitle feedback' aria-hidden='true'></i></a>"+
 											"</td>"+
 										"</tr>";
 						});
 						content += "</table>";
 					}
 					else if(e === "boat") {
-						panel = "<a class='addBoat col-md-1 col-xs-1' href='' ><i class='fa fa-plus fa-2x' aria-hidden='true'></i></a>";
+						panel = "<a class='addBoat col-md-1 col-xs-1' href='' ><i class='fa fa-plus fa-2x subtitle feedback' aria-hidden='true'></i></a>";
 						content += "<table class='table table-striped'>";
 						$.each(data, function(outkey, outvalue) {
 							$.each(outvalue, function(inkey, invalue) {
 								if(inkey === 0) content += "<tr>"+
 																"<th id='NAME-"+invalue.IDBOAT+"-"+event+"' class='editTable edit-boat'>" + invalue.NAME + "</th>"+
 																"<th>Capacity</th>"+
-																"<th><a class='delete delete-boat' href='"+invalue.IDBOAT+"'><i class='fa fa-2x fa-trash' aria-hidden='true'></i></a></th>"+
+																"<th><a class='delete delete-boat' href='"+invalue.IDBOAT+"'><i class='fa fa-2x fa-trash subtitle feedback' aria-hidden='true'></i></a></th>"+
 															"</tr>";
 								content += "<tr>"+
 												"<td>"+invalue.TITLE + "</td>"+
@@ -380,30 +388,18 @@ $(document).ready(function() {
 	}//function form
 
 	function openForm(title, header, content, panel, event) {
-		var formBox = $("<div id='formDialog' title='"+title+"'><h4>"+header+"</h4><br /></div>");
-		formBox.dialog({
-			width: 800,
-				height: 500,
-				resizable: false,
-				position: { at: "center top", of: window },
-				closeOnEscape: false,
-				buttons: [
-						    {
-						      text: "close",
-						      click: function() {
-						        $(this).dialog("close");
-						      }
-						    }
-						  ],
-				close: function(){
-			    	$(".modal").css("display", "none");
-			    	$(this).dialog("destroy");
-			    	Menu();
-			   }
-		}).append(content);
+		$(".content").removeClass('modal');
 
-		$(".ui-dialog-buttonpane").append(panel);
-		$(".ui-dialog-titlebar-close").hide();
+
+
+		$(".content").html("<div class='contentHeader contentMargin'></div>"+
+												"<div class='contentBody contentMargin'></div>"+
+												"<div class='contentFooter contentMargin'></div>");
+
+
+		$(".contentHeader").append("<h1>"+title+"</h1>");
+		$(".contentBody").append(content);
+		$(".contentFooter").append(panel);
 
 		// Jquery for person
 		$('.edit-person').editable('info.php?update=user', {
@@ -415,13 +411,12 @@ $(document).ready(function() {
 	  $(".addUser").click(function(e) {
 			e.preventDefault();
 			form("user", "add", event);
-			formBox.dialog("destroy");
+			//formBox.dialog("destroy");
 		});
 
 		$(".delete-user").click(function(e) {
 			e.preventDefault();
 			var id = $(this).attr("href");
-			formBox.dialog("destroy");
 			$.getJSON("info.php", {delete: "user", id: id}, function(data) {
 				if(data) form("user", "manage" , event);
 				else displayError(data);
@@ -438,13 +433,11 @@ $(document).ready(function() {
 	  $(".addBoat").click(function(e) {
 			e.preventDefault();
 			form("boat", "add", event);
-			formBox.dialog("destroy");
 		});
 
 		$(".delete-boat").click(function(e) {
 			e.preventDefault();
 			var id = $(this).attr("href");
-			formBox.dialog("destroy");
 
 			$.getJSON("info.php", {delete: "boat", id: id}, function(data) {
 				if(data) form("boat", "manage", event);
@@ -456,7 +449,7 @@ $(document).ready(function() {
 
 		$(".addForm").submit(function(e) {
 			e.preventDefault();
-			formBox.dialog("destroy");
+			//formBox.dialog("destroy");
 			var w = $(this).serializeArray()[0].value;
 			$.getJSON('info.php', $(this).serializeArray(), function(data) {
 				if(data) {
@@ -469,7 +462,7 @@ $(document).ready(function() {
 
 		$(".addUserCsv").click(function(e) {
 			e.preventDefault();
-			formBox.dialog("destroy");
+			//formBox.dialog("destroy");
 			form("csv", "add", event);
 		});
 
@@ -516,7 +509,7 @@ $(document).ready(function() {
 							obj["event"] = event;
 							$.getJSON("csv.php", obj, function(data) {
 								if(data) {
-									formBox.dialog("destroy");
+									//formBox.dialog("destroy");
 									form("user", "manage", event);
 								}
 								else displayError(data);
@@ -530,78 +523,80 @@ $(document).ready(function() {
 
 	function Menu(e) {
 	//$("#boat").html("");
-	//$(".nav-content").html("");
 
-	//$(".nav-side-menu").html("");
+	$(".content").addClass('modal'); //Loading screen
+	$(".nav-content").html("");
+	$(".content").html("");
 
-	$(".modal").css("display", "block"); //Loading screen
 		$.getJSON("info.php", {get: "event"}, function(data) {
 
-			var eventList = "<ul class='selectMenu nav nav-pills nav-stacked'>";
+			var eventList = "<ul class='Top'>";
+
 			var boxMenu = $("<div title='Menü'>Event<br /></div>");
 			$.each(data, function(key, value) {
 
-				var hasContent = (value.OBJECT > 0)?"":"disabled";
+				//var hasContent = (value.OBJECT > 0)?"":"disabled";
 				eventList += "<li role='presentation'>"+
-												"<a class='selectEvent col-md-8 col-xs-8 "+hasContent+"' href='"+value.IDEVENT+"'>"+value.NAME+" "+value.DATE+"</a>"+
-											 	"<a class='manageUser col-md-1 col-xs-1' href='"+value.IDEVENT+"' ><i class='fa fa-users fa-2x' aria-hidden='true'></i></a>"+
-											 	"<a class='manageBoat col-md-1 col-xs-1' href='"+value.IDEVENT+"' ><i class='fa fa-ship fa-2x' aria-hidden='true'></i></a>"+
-											 	"<a class='report col-md-1 col-xs-1 "+hasContent+"' href='"+value.IDEVENT+"' ><i class='fa fa-file-text-o fa-2x' aria-hidden='true'></i></a>"+
-											 	"<a class='deleteEvent col-md-1 col-xs-1' href='"+value.IDEVENT+"' ><i class='fa fa-trash fa-2x' aria-hidden='true'></i></a>"+
-											"</li>";
+												"<a class='openSubMenu' href='"+value.IDEVENT+"' >"+
+													"<i class='fa fa-caret-right' aria-hidden='true'></i> "+value.NAME+" "+value.DATE+
+												"</a>"+
+											"</li>"+
+											"<ul class='SubMenu Sub-"+value.IDEVENT+"' >"+
+												"<li><a class='feedback selectEvent' href='"+value.IDEVENT+"'>Show event</a></li>"+
+												"<li><a class='feedback manageUser' href='"+value.IDEVENT+"' >User list</a></li>"+
+												"<li><a class='feedback manageBoat' href='"+value.IDEVENT+"' >Boat list</a></li>"+
+												"<li><a class='feedback report' href='"+value.IDEVENT+"' >Report</a></li>"+
+												"<li><a class='feedback deleteEvent' href='"+value.IDEVENT+"' >Delete</a></li>"+
+											"</ul>";
 			});//.each
 
-			eventList += "</ul><a class='addEvent col-md-1 col-xs-1' href='' ><i class='fa fa-plus fa-2x' aria-hidden='true'></i></a>";
+			eventList += "</ul>";
+			eventList += "<div class='divider'></div>"+
+										"<a class='addEvent' href='' ><i class='fa fa-plus fa-2x addEventButton subtitle feedback' aria-hidden='true'></i></a>";
 
-			boxMenu.dialog({
-				width: 800,
-				height: 500,
-				resizable: false,
-				position: { at: "center top", of: window },
-				closeOnEscape: false,
-				close: function() {
-			     $(".modal").css("display", "none");
-			   }
-			}).append(eventList);
+			$(".nav-content").html(eventList);
 
-			//if( typeof e === "undefined")
-			$(".ui-dialog-titlebar-close").hide();
+			$(".openSubMenu").click(function(e) {
+				e.preventDefault();
+				var sub = $(".Sub-"+$(this).attr("href"));
+				if(!sub.is(':visible')) {
+					sub.toggle(EFFECT_SUBMENU_SHOW);
+					$(this).children('i').removeClass('fa-caret-right').addClass('fa-caret-down');
+				}
+				else {
+					sub.toggle(EFFECT_SUBMENU_HIDE);
+					$(this).children('i').removeClass('fa-caret-down').addClass('fa-caret-right');
+				}
+
+			});
+
 
 			$(".selectEvent").click( function(e) {
 				e.preventDefault();
 				init(parseInt($(this).attr("href")));
-				boxMenu.dialog("close");
 			});
 
 			$(".manageUser").click( function(e) {
 				e.preventDefault();
 				var event = $(this).attr("href");
-				boxMenu.dialog("close");
-				$(".modal").css("display", "block");
 				form("user", "manage", event);
 			});
 
 			$(".manageBoat").click( function(e) {
 				e.preventDefault();
 				var event = $(this).attr("href");
-				boxMenu.dialog("close");
-				$(".modal").css("display", "block");
 				form("boat", "manage", event);
 			});
 
 			$(".deleteEvent").click( function(e) {
 				e.preventDefault();
 				var event = $(this).attr("href");
-				boxMenu.dialog("close");
-				$(".modal").css("display", "block");
 				confirmForm("Delete event", "Are you sure you want to delete?", {delete: "event", id: event}, event);
 			});
 
 			$(".addEvent").click( function(e) {
 				e.preventDefault();
-				boxMenu.dialog("close");
 				var event = $(this).attr("href");
-				$(".modal").css("display", "block");
 				form("event", "add", event);
 			});
 
@@ -611,7 +606,7 @@ $(document).ready(function() {
 				window.open(url, '_blank');
 			});
 
-			$(".disabled").closest("a").off('click').attr("href", "#");
+			//$(".disabled").closest("a").off('click').attr("href", "#");
 		});
 	} // function Menu
 });
