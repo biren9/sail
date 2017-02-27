@@ -5,6 +5,7 @@
 
 EFFECT_DROP = 'drop';
 EFFECT_ACCEPT = 'slide';
+
 ERROR_CODE = new Array(13);
 	ERROR_CODE[1] = 'Event is empty';
 	ERROR_CODE[10] = 'Could not save! <br />Boat is full';
@@ -531,11 +532,15 @@ $(document).ready(function() {
 	//$("#boat").html("");
 	//$(".nav-content").html("");
 
-	$(".modal").css("display", "block");
+	//$(".nav-side-menu").html("");
+
+	$(".modal").css("display", "block"); //Loading screen
 		$.getJSON("info.php", {get: "event"}, function(data) {
+
 			var eventList = "<ul class='selectMenu nav nav-pills nav-stacked'>";
 			var boxMenu = $("<div title='Menü'>Event<br /></div>");
 			$.each(data, function(key, value) {
+
 				var hasContent = (value.OBJECT > 0)?"":"disabled";
 				eventList += "<li role='presentation'>"+
 												"<a class='selectEvent col-md-8 col-xs-8 "+hasContent+"' href='"+value.IDEVENT+"'>"+value.NAME+" "+value.DATE+"</a>"+
@@ -545,6 +550,7 @@ $(document).ready(function() {
 											 	"<a class='deleteEvent col-md-1 col-xs-1' href='"+value.IDEVENT+"' ><i class='fa fa-trash fa-2x' aria-hidden='true'></i></a>"+
 											"</li>";
 			});//.each
+
 			eventList += "</ul><a class='addEvent col-md-1 col-xs-1' href='' ><i class='fa fa-plus fa-2x' aria-hidden='true'></i></a>";
 
 			boxMenu.dialog({
@@ -557,6 +563,7 @@ $(document).ready(function() {
 			     $(".modal").css("display", "none");
 			   }
 			}).append(eventList);
+
 			//if( typeof e === "undefined")
 			$(".ui-dialog-titlebar-close").hide();
 
@@ -565,6 +572,7 @@ $(document).ready(function() {
 				init(parseInt($(this).attr("href")));
 				boxMenu.dialog("close");
 			});
+
 			$(".manageUser").click( function(e) {
 				e.preventDefault();
 				var event = $(this).attr("href");
@@ -572,6 +580,7 @@ $(document).ready(function() {
 				$(".modal").css("display", "block");
 				form("user", "manage", event);
 			});
+
 			$(".manageBoat").click( function(e) {
 				e.preventDefault();
 				var event = $(this).attr("href");
@@ -579,6 +588,7 @@ $(document).ready(function() {
 				$(".modal").css("display", "block");
 				form("boat", "manage", event);
 			});
+
 			$(".deleteEvent").click( function(e) {
 				e.preventDefault();
 				var event = $(this).attr("href");
@@ -586,6 +596,7 @@ $(document).ready(function() {
 				$(".modal").css("display", "block");
 				confirmForm("Delete event", "Are you sure you want to delete?", {delete: "event", id: event}, event);
 			});
+
 			$(".addEvent").click( function(e) {
 				e.preventDefault();
 				boxMenu.dialog("close");
@@ -593,6 +604,7 @@ $(document).ready(function() {
 				$(".modal").css("display", "block");
 				form("event", "add", event);
 			});
+
 			$(".report").click(function(e) {
 				e.preventDefault();
 				var url = 'report.php?event='+$(this).attr("href");

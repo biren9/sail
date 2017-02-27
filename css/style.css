@@ -11,7 +11,7 @@ body, html {
 .modal {
   display: block;
   position: fixed;
-  z-index: 50;
+  z-index: 0;
   top: 0;
   left: 0;
   height: 100%;
@@ -121,6 +121,7 @@ body.loading .modal {
         .nav-side-menu {
           background: #FAFAFA;
           position: relative;
+          z-index: 1;
           flex: 0 0 360px;
           height: 100vh;
           overflow-y: auto;
@@ -194,6 +195,10 @@ body.loading .modal {
         .items li, .nav-content li {
             padding: 6px 16px;
             font-size: 1.2em;
+        }
+
+        .member {
+          z-index: 2;
         }
 
         .item {
