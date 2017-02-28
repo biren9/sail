@@ -361,14 +361,14 @@ $(document).ready(function() {
                 content += '<div class="col-md-2"></div>' +
 				                   '<div class="col-md-8">' +
 				                   		'<form class="addForm">' +
-				                    		'<input type="hidden" name="add" value="event"/>' +
+				                    		'<input type="hidden" name="add" value="event" />' +
 				                    			'<div class="input-group">' +
 				                    				'<span class="input-group-addon" id="sizing-addon2"></span>' +
-				                    				'<input required type="text" class="form-control" name="name" placeholder="Title" aria-describedby="sizing-addon2">' +
+				                    				'<input required type="text" class="form-control" name="name" placeholder="Title" aria-describedby="sizing-addon2" />' +
 				                    			'</div>' +
 				                    			'<div class="input-group">' +
 				                    				'<span class="input-group-addon" id="sizing-addon2"></span>' +
-				                    				'<input  requiredtype="text" class="form-control datepicker" name="date" placeholder="Date" aria-describedby="sizing-addon2">' +
+				                    				'<input  requiredtype="text" class="form-control datepicker" name="date" placeholder="Date" aria-describedby="sizing-addon2" />' +
 				                    			'</div>' +
 				                    		'<button class="button" type="submit" name="addevent">ADD</button>' +
 				                    	'</form>' +
@@ -381,11 +381,11 @@ $(document).ready(function() {
 				                    		'<input type="hidden" name="event" value="' + event + '"/>' +
 				                    		'<div class="input-group">' +
 				                    			'<span class="input-group-addon" id="sizing-addon2"></span>' +
-				                    			'<input required type="text" class="form-control" name="firstname" placeholder="Firstname" aria-describedby="sizing-addon2">' +
+				                    			'<input required type="text" class="form-control" name="firstname" placeholder="Firstname" aria-describedby="sizing-addon2" />' +
 				                    		'</div>' +
 				                    		'<div class="input-group">' +
 				                    			'<span class="input-group-addon" id="sizing-addon2"></span>' +
-				                    			'<input required type="text" class="form-control" name="lastname" placeholder="Lastname" aria-describedby="sizing-addon2">' +
+				                    			'<input required type="text" class="form-control" name="lastname" placeholder="Lastname" aria-describedby="sizing-addon2" />' +
 				                    		'</div>' +
 				                    		'<div class="input-group">' +
 				                    			'<span class="input-group-addon" id="sizing-addon2"></span>' +
@@ -602,9 +602,9 @@ $(document).ready(function() {
     function Menu(e) {
         //$("#boat").html("");
 
-        $(".modalContent").addClass('modal'); //Loading screen
+        //$(".modalContent").addClass('modal'); //Loading screen
         $(".nav-content").html("");
-        $(".vcontent").html("");
+        $(".vcontent").html(""); //"<div class='screensaver'></div>"
 
         $.getJSON("info.php", {
             get: "event"
