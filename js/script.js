@@ -64,7 +64,12 @@ $(document).ready(function() {
                 $("#boat").append('	<div class="card shadow-1 boat droppableSnap" id="boat-' + outKey + '" >' +
 								                    	'<div class="title">' +
 								                    		'<div class="primary-title">' + outValue[0].NAME + '</div>' +
-								                    		'<div class="subtitle"><span class="person-count">0</span> of <span class="person-capacity"></span> berths filled</div>' +
+								                    		'<div class="subtitle">'+
+																					'<span class="person-count">0</span>'+
+																						' of '+
+																					'<span class="person-capacity"></span>'+
+																					' berths filled'+
+																				'</div>' +
 								                    	'</div>' +
 								                    	'<div class="personlist" data-idboat="' + outKey + '" id="boat-crew-' + outKey + '" ></div>' +
 								                    '</div>'); //.append
@@ -72,7 +77,9 @@ $(document).ready(function() {
                 $.each(outValue, function(inKey, inValue) {
                     maxCapacity += parseInt(inValue["CAPACITY"]);
                     $('#boat-crew-' + outKey).append('<div class="' + inValue.TITLE.toLowerCase() + ' inset-shadow-1 group">' +
-															                       		'<div class="subheader">' + inValue.TITLE + ' <span class="count pull-right"></span></div>' +
+															                       		'<div class="subheader">' + inValue.TITLE +
+																													' <span class="count pull-right"></span>'+
+																												'</div>' +
 															                        	'<div class="items">' +
 															                        		'<ul class="droppable list-' + inValue.IDJOB + '" data-place="' + inValue["CAPACITY"] + '" data-idjob="' + inValue.IDJOB + '" >' +
 															                        		'</ul>' +
@@ -282,10 +289,20 @@ $(document).ready(function() {
                 $.getJSON("info.php", obj, function(data) {
 
                     if (e === "user") {
-                        panel = "<a class='addUser col-md-1 col-xs-1' href='' ><i class='fa fa-plus fa-2x subtitle feedback' aria-hidden='true'></i></a>";
-                        panel += "<a class='addUserCsv col-md-1 col-xs-1' href='' ><i class='fa fa-cloud-upload fa-2x subtitle feedback' aria-hidden='true'></i></a>";
+                        panel = "<a class='addUser col-md-1 col-xs-1' href='' >"+
+																	"<i class='fa fa-plus fa-2x subtitle feedback' aria-hidden='true'></i>"+
+																"</a>";
+                        panel += "<a class='addUserCsv col-md-1 col-xs-1' href='' >"+
+																	 "<i class='fa fa-cloud-upload fa-2x subtitle feedback' aria-hidden='true'></i>"+
+																 "</a>";
                         content += "<table class='table table-striped'>";
-                        content += "<tr><th>Firstname</th><th>Lastname</th><th>Job</th><th>Delete</th></tr>";
+                        content += "<tr>"+
+																			"<th>Firstname</th>"+
+																			"<th>Lastname</th>"+
+																			"<th>Job</th>"+
+																			"<th>Delete</th>"+
+																		"</tr>";
+
                         $.each(data, function(key, value) {
                             content += "<tr>" +
 				                                	"<td class='editTable'>" +
@@ -298,13 +315,17 @@ $(document).ready(function() {
 				                                		"<div id='JOB-" + value.IDJOB + "-" + event + "' class='edit edit-person-select'>" + value.TITLE + "</div>" +
 				                                	"</td>" +
 				                                	"<td class='editTable'>" +
-				                                		"<a class='delete delete-user' href='" + value.IDPERSON + "'><i class='fa fa-2x fa-trash subtitle feedback' aria-hidden='true'></i></a>" +
+				                                		"<a class='delete delete-user' href='" + value.IDPERSON + "'>"+
+																							"<i class='fa fa-2x fa-trash subtitle feedback' aria-hidden='true'></i>"+
+																						"</a>" +
 				                                	"</td>" +
 				                                "</tr>";
                         });
                         content += "</table>";
                     } else if (e === "boat") {
-                        panel = "<a class='addBoat col-md-1 col-xs-1' href='' ><i class='fa fa-plus fa-2x subtitle feedback' aria-hidden='true'></i></a>";
+                        panel = "<a class='addBoat col-md-1 col-xs-1' href='' >"+
+																	"<i class='fa fa-plus fa-2x subtitle feedback' aria-hidden='true'></i>"+
+																"</a>";
                         content += "<table class='table table-striped'>";
                         $.each(data, function(outkey, outvalue) {
                             $.each(outvalue, function(inkey, invalue) {

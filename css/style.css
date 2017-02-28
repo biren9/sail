@@ -1,7 +1,17 @@
+@import url(//fonts.googleapis.com/css?family=Roboto:300);
+
 body, html {
     height: 100%;
     margin: 0px auto;
     padding: 0px auto;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1em;
+  color: black;
+  background: #FAFAFA;
+  overflow-x: hidden;
 }
 
 ul {
@@ -17,6 +27,10 @@ li {
 
 a {
     text-decoration: none !important;
+}
+
+#wrapper {
+    display: flex;
 }
 
 .draggable {
@@ -61,9 +75,11 @@ body.loading .modal {
     display: block;
 }
 
+/*
 .manageBoat:hover, .manageUser:hover, .delete:hover {
     color: #23527c;
 }
+*/
 
 .selectMenu {
     max-height: 80%;
@@ -108,19 +124,6 @@ body.loading .modal {
 
 .personlist {
     margin-bottom: 0px;
-}
-
-@import url(http://fonts.googleapis.com/css?family=Roboto:300);
-body {
-    font-family: 'Roboto', sans-serif;
-    font-size: 1em;
-    color: black;
-    background: #FAFAFA;
-    overflow-x: hidden;
-}
-
-#wrapper {
-    display: flex;
 }
 
 .home, .addEventButton {
