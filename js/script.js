@@ -41,7 +41,7 @@ $(document).ready(function() {
 	});
 
 	function init(event) {
-		$(".content").addClass('modal');
+		$(".modalContent").addClass('modal');
 
 	    $.getJSON('info.php', {get: 'init', event: event}, function(data) {
 
@@ -197,7 +197,7 @@ $(document).ready(function() {
 					}// updateSize()
 		    }//dragDrop()
 		    dragDrop(); // re-init-drag&drop
-				$(".content").removeClass('modal');
+				$(".modalContent").removeClass('modal');
 	    });//.getJSON
 	}//function init
 
@@ -215,6 +215,35 @@ $(document).ready(function() {
 	}// function displayError
 
 	function confirmForm(title, content, obj, event) {
+		$("body").append("<div class='confirmBox shadow-4'></div>");
+
+		$("#overlay").addClass('overlay');
+
+		var btn = "<div class='btnSection'>"+
+								"<a class='button' href='cancel' >CANCEL</a>"+
+								"<a class='button' href='erase' >ERASE</a>"+
+							"</div>";
+
+		$(".confirmBox").html("<div class='confirmBoxText'>"+content+"</div>"+
+														btn);
+
+		$(".btnSection a").click( function(e) {
+			e.preventDefault();
+			if($(this).attr("href") === "cancel") {
+				$(".confirmBox").remove();
+				$("#overlay").removeClass('overlay');
+			}
+			else if($(this).attr("href") === "erase") {
+				$.getJSON("info.php", obj, function(data) {
+					$(".confirmBox").remove();
+					$("#overlay").removeClass('overlay');
+					$(".vcontent").html("");
+					if(!data) displayError(data);
+					else Menu();
+				});
+			}
+		});
+		/*
 		var formBox = $('<div style="padding: 10px; max-width: 500px; word-wrap: break-word;">' + content + '</div>').dialog({
 			draggable: false,
 			modal: true,
@@ -226,7 +255,7 @@ $(document).ready(function() {
 	    		Yes: function () {
 	    			$.getJSON("info.php", obj, function(data) {
 	    				formBox.dialog('destroy');
-							$(".content").html("");
+							$(".vcontent").html("");
 	    				if(!data) displayError(data);
 							else Menu();
 	    			});
@@ -237,10 +266,11 @@ $(document).ready(function() {
 				}
 			}
 		});
+		*/
 	}//function confirmForm
 
 	function form(e, s, event) {  //e=description || event= EventID
-		$(".content").addClass('modal');
+		$(".modalContent").addClass('modal');
 		var content = "";
 		var panel = "";
 
@@ -333,7 +363,7 @@ $(document).ready(function() {
 									'</div>'+
 									'<div class="input-group">'+
 										'<span class="input-group-addon" id="sizing-addon2"></span>'+
-										'<select required class="form-control" name="job" placeholder="File" aria-describedby="sizing-addon2">';
+										'<select required class="form-control" name="job" placeholder="File" aria-describedby="sizing-addon2" style="z-index: 0;">';
 
 										$.each(jobsData, function(key, value) {
 											content += "<option value='"+key+"'>"+value+"</option>";
@@ -388,11 +418,9 @@ $(document).ready(function() {
 	}//function form
 
 	function openForm(title, header, content, panel, event) {
-		$(".content").removeClass('modal');
+		$(".modalContent").removeClass('modal');
 
-
-
-		$(".content").html("<div class='contentHeader contentMargin'></div>"+
+		$(".vcontent").html("<div class='contentHeader contentMargin'></div>"+
 												"<div class='contentBody contentMargin'></div>"+
 												"<div class='contentFooter contentMargin'></div>");
 
@@ -417,7 +445,10 @@ $(document).ready(function() {
 		$(".delete-user").click(function(e) {
 			e.preventDefault();
 			var id = $(this).attr("href");
+			$(".modalContent").addClass('modal');
+
 			$.getJSON("info.php", {delete: "user", id: id}, function(data) {
+				$(".modalContent").removeClass('modal');
 				if(data) form("user", "manage" , event);
 				else displayError(data);
 			});
@@ -449,9 +480,12 @@ $(document).ready(function() {
 
 		$(".addForm").submit(function(e) {
 			e.preventDefault();
-			//formBox.dialog("destroy");
+			$(".modalContent").addClass('modal');
+
 			var w = $(this).serializeArray()[0].value;
+
 			$.getJSON('info.php', $(this).serializeArray(), function(data) {
+				$(".modalContent").removeClass('modal');
 				if(data) {
 					if(w === "event") Menu();
 					else form(w, "manage", event);
@@ -524,9 +558,9 @@ $(document).ready(function() {
 	function Menu(e) {
 	//$("#boat").html("");
 
-	$(".content").addClass('modal'); //Loading screen
+	$(".modalContent").addClass('modal'); //Loading screen
 	$(".nav-content").html("");
-	$(".content").html("");
+	$(".vcontent").html("");
 
 		$.getJSON("info.php", {get: "event"}, function(data) {
 
@@ -537,7 +571,7 @@ $(document).ready(function() {
 
 				//var hasContent = (value.OBJECT > 0)?"":"disabled";
 				eventList += "<li role='presentation'>"+
-												"<a class='openSubMenu' href='"+value.IDEVENT+"' >"+
+												"<a class='openSubMenu ulFeedback' href='"+value.IDEVENT+"' >"+
 													"<i class='fa fa-caret-right' aria-hidden='true'></i> "+value.NAME+" "+value.DATE+
 												"</a>"+
 											"</li>"+
@@ -562,10 +596,12 @@ $(document).ready(function() {
 				if(!sub.is(':visible')) {
 					sub.toggle(EFFECT_SUBMENU_SHOW);
 					$(this).children('i').removeClass('fa-caret-right').addClass('fa-caret-down');
+					//
 				}
 				else {
 					sub.toggle(EFFECT_SUBMENU_HIDE);
 					$(this).children('i').removeClass('fa-caret-down').addClass('fa-caret-right');
+					//
 				}
 
 			});

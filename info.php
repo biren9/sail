@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 require_once("function.php");
-
+//sleep(3);
 if(isset($_GET["get"])) {
 	$get = $_GET["get"];
 	$event = $_GET["event"];

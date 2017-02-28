@@ -25,10 +25,14 @@
 </head>
 <body>
 <div id='wrapper'>
-  <div class="flex content modal" id='boat'></div>
+  <div class="flex content">
+    <div class="flex vcontent" id='boat'></div>
+    <div class="modalContent"></div>
+  </div>
   <div class="flex nav-side-menu shadow-2 droppableSnap">
     <div class="nav-content"></div>
   </div>
 </div>
+<div id="overlay"></div>
 </body>
 </html>

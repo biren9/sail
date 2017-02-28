@@ -25,13 +25,23 @@ a {
 
 .modal {
   display: block;
-  position: absolute;;
+  position: absolute;
   z-index: 0;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
   background: rgba( 255, 255, 255, .8 ) url('../img/body_load.gif') 50% 50% no-repeat;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background-color: rgba(0,0,0,0.5); /*dim the background*/
 }
 
 /* When the body has the loading class, we turn
@@ -118,7 +128,7 @@ body.loading .modal {
           margin: 16px;
         }
 
-        .content {
+        .vcontent, .content {
             flex: 1;
             margin: 0 auto;
             position: relative;
@@ -131,7 +141,6 @@ body.loading .modal {
           background: #FAFAFA;
           color: #212121;
           position: relative;
-          z-index: 1;
           flex: 0 0 360px;
           height: 100vh;
           overflow-y: auto;
@@ -162,6 +171,13 @@ body.loading .modal {
         .feedback:hover {
           opacity: 0.8;
           color: #FF5722;
+        }
+
+        .ulFeedback:hover i {
+          opacity: 0.8;
+          color: #FF5722;
+          margin-left: -5px;
+          margin-right: 5px;
         }
 
         .card {
@@ -300,4 +316,29 @@ body.loading .modal {
 
         .contentMargin {
           margin: 10px 40px;
+        }
+
+
+        .confirmBox {
+          position: fixed;
+          background-color: white;
+          z-index: 11;
+          width: 500px;
+          height: 200px;
+          top: calc( 50% - 100px );
+          left: calc( 50% - 250px );
+        }
+
+        .confirmBoxText {
+          padding: 20px;
+        }
+
+        .btnSection {
+          position: absolute;
+          bottom: 20px;
+          right: 20px;
+        }
+
+        .btnSection a {
+          padding: 12px 25px;
         }
