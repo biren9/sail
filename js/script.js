@@ -53,9 +53,8 @@ $(document).ready(function() {
             if (data.boat.length === 0 && data.person.length === 0) displayError(1);
 
             //cleanup
-            $("#boat").html("");
-            $(".nav-content").html("");
-
+            $("#boat").empty();
+            $(".nav-content").empty();
 
             //begin boatlist
             $.each(data.boat, function(outKey, outValue) {
@@ -271,7 +270,7 @@ $(document).ready(function() {
                 $.getJSON("info.php", obj, function(data) {
                     $(".confirmBox").remove();
                     $("#overlay").removeClass('overlay');
-                    $(".vcontent").html("");
+                    $(".vcontent").empty();
                     if (!data) displayError(data);
                     else Menu();
                 });
@@ -628,11 +627,11 @@ $(document).ready(function() {
     } //function openForm
 
     function Menu(e) {
-        //$("#boat").html("");
+        //$("#boat").empty();
 
         //$(".modalContent").addClass('modal'); //Loading screen
-        $(".nav-content").html("");
-        $(".vcontent").html(""); //"<div class='screensaver'></div>"
+        $(".nav-content").empty();
+        $(".vcontent").empty(); //html("<div class='screensaver'></div>")
 
         $.getJSON("info.php", {
             get: "event"
