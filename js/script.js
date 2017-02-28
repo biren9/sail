@@ -443,7 +443,7 @@ $(document).ready(function() {
 		                content += '<button class="button" type="submit" name="addevent">Add</button>' +
 					                   '</form>' +
 					                  '</div>';
-            } else if (e === "csv") {
+            } else if (e === "CSV") {
                 content += '<div class="col-md-2"></div>' +
 				                    	'<div class="col-md-8">' +
 				                    		'<form class="addCsvForm" >' +
@@ -545,7 +545,7 @@ $(document).ready(function() {
         $(".addUserCsv").click(function(e) {
             e.preventDefault();
             //formBox.dialog("destroy");
-            form("csv", "add", event);
+            form("CSV", "add", event);
         });
 
         $(".csvUpload").change(function(e) {
