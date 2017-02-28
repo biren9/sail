@@ -342,3 +342,19 @@ body.loading .modal {
         .btnSection a {
           padding: 12px 25px;
         }
+
+        .button {
+          border-radius: 2px;
+          font-size: 14pt;
+          border-style: none;
+          color: white;
+          background: #2196F3;
+          width: 100%;
+          height: 36px;
+          box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+          margin-top: 10px;
+        }
+
+        .button:hover {
+          color: #FF5722;
+        }
