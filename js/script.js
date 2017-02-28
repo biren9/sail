@@ -10,7 +10,7 @@ EFFECT_SUBMENU_SHOW = 'blind';
 EFFECT_SUBMENU_HIDE = 'blind';
 
 ERROR_CODE = new Array(13);
-	ERROR_CODE[1] = 'Event is empty';
+	ERROR_CODE[1] = 'Could not display! <br />Event contains no user';
 	ERROR_CODE[10] = 'Could not save! <br />Boat is full';
 	ERROR_CODE[11] = 'Could not save! <br />Person belongs to other event';
 	ERROR_CODE[20] = 'Could not delete! <br />Could not delete person';
@@ -202,16 +202,25 @@ $(document).ready(function() {
 	}//function init
 
 	function displayError(i) {
-		if(ERROR_CODE[i] === undefined) return;
-		$("<div title='ERROR: "+i+"'>ERROR: <br />"+ERROR_CODE[i]+" </div>").dialog({
-		    modal: true,
-		    buttons: {
-		        Ok: function () {
-		            $(this).dialog("close");
-		            Menu();
-		        }
-		    }
+
+		$("body").append("<div class='confirmBox shadow-4'></div>");
+
+		$("#overlay").addClass('overlay');
+
+		var btn = "<div class='btnSection'>"+
+								"<a class='button' href='reload'>RELOAD</a>"+
+							"</div>";
+
+		$(".confirmBox").html("<div class='confirmBoxText'>"+ERROR_CODE[i]+"</div>"+
+														btn);
+
+		$(".btnSection a").click( function(e) {
+			e.preventDefault();
+			$(".confirmBox").remove();
+			$("#overlay").removeClass('overlay');
+			Menu();
 		});
+
 	}// function displayError
 
 	function confirmForm(title, content, obj, event) {
@@ -243,30 +252,6 @@ $(document).ready(function() {
 				});
 			}
 		});
-		/*
-		var formBox = $('<div style="padding: 10px; max-width: 500px; word-wrap: break-word;">' + content + '</div>').dialog({
-			draggable: false,
-			modal: true,
-			resizable: false,
-			width: 'auto',
-			title: title || 'Confirm',
-			minHeight: 75,
-			buttons: {
-	    		Yes: function () {
-	    			$.getJSON("info.php", obj, function(data) {
-	    				formBox.dialog('destroy');
-							$(".vcontent").html("");
-	    				if(!data) displayError(data);
-							else Menu();
-	    			});
-				},
-				Cancel: function () {
-					formBox.dialog('destroy');
-					//Menu();
-				}
-			}
-		});
-		*/
 	}//function confirmForm
 
 	function form(e, s, event) {  //e=description || event= EventID
