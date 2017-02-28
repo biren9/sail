@@ -234,7 +234,7 @@ $(document).ready(function() {
         $("#overlay").addClass('overlay');
 
         var btn = "<div class='btnSection'>" +
-            "<a class='button' href='ok'>OK</a>" +
+            "<a href='ok'>OK</a>" +
             "</div>";
 
         $(".confirmBox").html("<div class='confirmBoxText'>" + ERROR_CODE[i] + "</div>" +
@@ -255,8 +255,8 @@ $(document).ready(function() {
         $("#overlay").addClass('overlay');
 
         var btn = "<div class='btnSection'>" +
-            				"<a class='button' href='cancel' >CANCEL</a>" +
-            				"<a class='button' href='erase' >ERASE</a>" +
+            				"<a href='cancel' >CANCEL</a>" +
+            				"<a href='erase' >ERASE</a>" +
             			"</div>";
 
         $(".confirmBox").html("<div class='confirmBoxText'>" + content + "</div>" +
