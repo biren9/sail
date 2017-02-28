@@ -362,14 +362,21 @@ $(document).ready(function() {
 				                   '<div class="col-md-8">' +
 				                   		'<form class="addForm">' +
 				                    		'<input type="hidden" name="add" value="event" />' +
-				                    			'<div class="input-group">' +
-				                    				'<span class="input-group-addon" id="sizing-addon2"></span>' +
-				                    				'<input required type="text" class="form-control" name="name" placeholder="Title" aria-describedby="sizing-addon2" />' +
-				                    			'</div>' +
-				                    			'<div class="input-group">' +
-				                    				'<span class="input-group-addon" id="sizing-addon2"></span>' +
-				                    				'<input  requiredtype="text" class="form-control datepicker" name="date" placeholder="Date" aria-describedby="sizing-addon2" />' +
-				                    			'</div>' +
+
+                                '<div class="inputGroup">'+
+                                  '<input type="text" required name="name" />'+
+                                  '<span class="highlight"></span>'+
+                                  '<span class="bar"></span>'+
+                                  '<label>Event name</label>'+
+                                '</div>'+
+
+                                '<div class="inputGroup">'+
+                                  '<input type="text" required requiredtype="text" name="date" class="datepicker"/>'+
+                                  '<span class="highlight"></span>'+
+                                  '<span class="bar"></span>'+
+                                  '<label>Date</label>'+
+                                '</div>'+
+
 				                    		'<button class="button" type="submit" name="addevent">ADD</button>' +
 				                    	'</form>' +
 				                    '</div>';
@@ -379,23 +386,32 @@ $(document).ready(function() {
 				                   		'<form class="addForm">' +
 				                    		'<input type="hidden" name="add" value="user"/>' +
 				                    		'<input type="hidden" name="event" value="' + event + '"/>' +
-				                    		'<div class="input-group">' +
-				                    			'<span class="input-group-addon" id="sizing-addon2"></span>' +
-				                    			'<input required type="text" class="form-control" name="firstname" placeholder="Firstname" aria-describedby="sizing-addon2" />' +
-				                    		'</div>' +
-				                    		'<div class="input-group">' +
-				                    			'<span class="input-group-addon" id="sizing-addon2"></span>' +
-				                    			'<input required type="text" class="form-control" name="lastname" placeholder="Lastname" aria-describedby="sizing-addon2" />' +
-				                    		'</div>' +
-				                    		'<div class="input-group">' +
-				                    			'<span class="input-group-addon" id="sizing-addon2"></span>' +
-				                    			'<select required class="form-control" name="job" placeholder="File" aria-describedby="sizing-addon2" style="z-index: 0;">';
+
+                                '<div class="inputGroup">'+
+                                  '<input type="text" required name="firstname" />'+
+                                  '<span class="highlight"></span>'+
+                                  '<span class="bar"></span>'+
+                                  '<label>Firstname</label>'+
+                                '</div>'+
+
+                                '<div class="inputGroup">'+
+                                  '<input type="text" required name="lastname" />'+
+                                  '<span class="highlight"></span>'+
+                                  '<span class="bar"></span>'+
+                                  '<label>Lastname</label>'+
+                                '</div>'+
+
+                                '<div class="inputGroup">' +
+				                    			'<select required class="form-control" name="job" aria-describedby="sizing-addon2" style="z-index: 0;">';
 
 									                $.each(jobsData, function(key, value) {
 									                    content += "<option value='" + key + "'>" + value + "</option>";
 									                });
 
 				               content += '</select>' +
+                                  '<span class="highlight"></span>'+
+                                  '<span class="bar"></span>'+
+                                  '<label>Job</label>'+
 				                    		'</div>' +
 				                    		'<button class="button" type="submit" name="adduser">Add</button>' +
 				                    	'</form>' +
@@ -404,24 +420,24 @@ $(document).ready(function() {
                 content += '<div class="col-md-2"></div>' +
 				                   '<div class="col-md-8">' +
 				                   		'<form class="addForm">' +
-				                    	'<input type="hidden" name="add" value="boat"/>' +
-				                    	'<input type="hidden" name="event" value="' + event + '"/>' +
-				                    		'<div class="input-group">' +
-				                    			'<span class="input-group-addon" id="sizing-addon2"></span>' +
-				                    			'<input type="text" required class="form-control" name="name" placeholder="Name" aria-describedby="sizing-addon2">' +
-				                    		'</div>';
+				                    	  '<input type="hidden" name="add" value="boat"/>' +
+				                    	  '<input type="hidden" name="event" value="' + event + '"/>' +
+
+                                 '<div class="inputGroup">'+
+                                   '<input type="text" required name="name" />'+
+                                   '<span class="highlight"></span>'+
+                                   '<span class="bar"></span>'+
+                                   '<label>Boat name</label>'+
+                                 '</div>';
 
 									                $.each(jobsData, function(key, value) {
-									                    content += '<div class="input-group">' +
-														                        '<span class="input-group-addon" id="sizing-addon2">' + value + '</span>' +
-														                        '<select class="form-control" name="job[' + key + ']" aria-describedby="sizing-addon2">';
 
-									                    for (i = 0; i <= 20; ++i) {
-									                        content += "<option value='" + i + "'>" + i + "</option>";
-									                    }
-
-									                    content += '</select>' +
-									                        			'</div>';
+                                      content += '<div class="inputGroup">'+
+                                                    '<input type="number" required name="job[' + key + ']" />'+
+                                                    '<span class="highlight"></span>'+
+                                                    '<span class="bar"></span>'+
+                                                    '<label>Number of ' + value + '</label>'+
+                                                  '</div>';
 									                });
 
 		                content += '<button class="button" type="submit" name="addevent">Add</button>' +
