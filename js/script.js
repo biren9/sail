@@ -300,57 +300,69 @@ $(document).ready(function() {
                         panel += "<a class='addUserCsv col-md-1 col-xs-1' href='' >"+
 																	 "<i class='fa fa-cloud-upload fa-2x subtitle feedback' aria-hidden='true'></i>"+
 																 "</a>";
-                        content += "<table class='table table-striped'>";
-                        content += "<tr>"+
-																			"<th>Firstname</th>"+
-																			"<th>Lastname</th>"+
-																			"<th>Job</th>"+
-																			"<th>Delete</th>"+
-																		"</tr>";
 
-                        $.each(data, function(key, value) {
-                            content += "<tr>" +
-				                                	"<td class='editTable'>" +
-				                                		"<div id='FIRSTNAME-" + value.IDPERSON + "-" + event + "' class='edit edit-person'>" + value.FIRSTNAME + "</div>" +
-				                                	"</td>" +
-				                                	"<td class='editTable'>" +
-				                                		"<div id='LASTNAME-" + value.IDPERSON + "-" + event + "' class='edit edit-person'>" + value.LASTNAME + "</div>" +
-				                                	"</td>" +
-				                                	"<td class='editTable'>" +
-				                                		"<div id='JOB-" + value.IDJOB + "-" + event + "' class='edit edit-person-select'>" + value.TITLE + "</div>" +
-				                                	"</td>" +
-				                                	"<td class='editTable'>" +
-				                                		"<a class='delete delete-user' href='" + value.IDPERSON + "'>"+
-																							"<i class='fa fa-2x fa-trash subtitle feedback' aria-hidden='true'></i>"+
-																						"</a>" +
-				                                	"</td>" +
-				                                "</tr>";
-                        });
-                        content += "</table>";
+                        if(data.length === 0){
+                           content += "USER list is empty";
+                        }
+                        else {
+                          content += "<table class='table table-striped'>";
+                          content += "<tr>"+
+  																			"<th>Firstname</th>"+
+  																			"<th>Lastname</th>"+
+  																			"<th>Job</th>"+
+  																			"<th>Delete</th>"+
+  																		"</tr>";
+
+                          $.each(data, function(key, value) {
+                              content += "<tr>" +
+  				                                	"<td class='editTable'>" +
+  				                                		"<div id='FIRSTNAME-" + value.IDPERSON + "-" + event + "' class='edit edit-person'>" + value.FIRSTNAME + "</div>" +
+  				                                	"</td>" +
+  				                                	"<td class='editTable'>" +
+  				                                		"<div id='LASTNAME-" + value.IDPERSON + "-" + event + "' class='edit edit-person'>" + value.LASTNAME + "</div>" +
+  				                                	"</td>" +
+  				                                	"<td class='editTable'>" +
+  				                                		"<div id='JOB-" + value.IDJOB + "-" + event + "' class='edit edit-person-select'>" + value.TITLE + "</div>" +
+  				                                	"</td>" +
+  				                                	"<td class='editTable'>" +
+  				                                		"<a class='delete delete-user' href='" + value.IDPERSON + "'>"+
+  																							"<i class='fa fa-2x fa-trash subtitle feedback' aria-hidden='true'></i>"+
+  																						"</a>" +
+  				                                	"</td>" +
+  				                                "</tr>";
+                          });
+                          content += "</table>";
+                        }//else
                     } else if (e === "boat") {
                         panel = "<a class='addBoat col-md-1 col-xs-1' href='' >"+
 																	"<i class='fa fa-plus fa-2x subtitle feedback' aria-hidden='true'></i>"+
 																"</a>";
-                        content += "<table class='table table-striped'>";
-                        $.each(data, function(outkey, outvalue) {
-                            $.each(outvalue, function(inkey, invalue) {
-                                if (inkey === 0) content += "<tr>" +
-												                                    	"<th id='NAME-" + invalue.IDBOAT + "-" + event + "' class='editTable edit-boat'>" + invalue.NAME + "</th>" +
-												                                    	"<th>Capacity</th>" +
-												                                    	"<th>"+
-																																"<a class='delete delete-boat' href='" + invalue.IDBOAT + "'>"+
-																																	"<i class='fa fa-2x fa-trash subtitle feedback' aria-hidden='true'></i>"+
-																																"</a>"+
-																															"</th>" +
-												                                    "</tr>";
-                                content += "<tr>" +
-				                                   		"<td>" + invalue.TITLE + "</td>" +
-				                                    	"<td>" + invalue.CAPACITY + "</td>" +
-				                                    	"<td></td>" +
-				                                   "</tr>";
-                            });
-                        });
-                        content += "</table>";
+
+                        if(data.length === 0){
+                           content += "BOAT list is empty";
+                        }
+                        else {
+                          content += "<table class='table table-striped'>";
+                          $.each(data, function(outkey, outvalue) {
+                              $.each(outvalue, function(inkey, invalue) {
+                                  if (inkey === 0) content += "<tr>" +
+  												                                    	"<th id='NAME-" + invalue.IDBOAT + "-" + event + "' class='editTable edit-boat'>" + invalue.NAME + "</th>" +
+  												                                    	"<th>Capacity</th>" +
+  												                                    	"<th>"+
+  																																"<a class='delete delete-boat' href='" + invalue.IDBOAT + "'>"+
+  																																	"<i class='fa fa-2x fa-trash subtitle feedback' aria-hidden='true'></i>"+
+  																																"</a>"+
+  																															"</th>" +
+  												                                    "</tr>";
+                                  content += "<tr>" +
+  				                                   		"<td>" + invalue.TITLE + "</td>" +
+  				                                    	"<td>" + invalue.CAPACITY + "</td>" +
+  				                                    	"<td></td>" +
+  				                                   "</tr>";
+                              });
+                          });
+                          content += "</table>";
+                        }
                     }
                     openForm("Manage " + e, "", content, panel, event);
                 });
