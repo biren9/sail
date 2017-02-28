@@ -37,7 +37,7 @@ function getBoat($event) {
 							INNER JOIN job
 							ON job.IDJOB = capacity.FIJOB
 							WHERE boat.FIEVENT = ?");
-							
+
 	$query->execute(array($event));
 	$row = $query->fetchAll(PDO::FETCH_ASSOC);
 
@@ -72,6 +72,17 @@ function getEvent() {
 	return $row;
 }
 
+function getEventName($i) {
+	$db = connectDB();
+	$query = $db->prepare("SELECT NAME, `DATE`
+							FROM event
+							WHERE IDEVENT=?");
+	$query->execute(array($i));
+	$r = $query->fetch(PDO::FETCH_ASSOC);
+
+	return $r;
+}
+
 function getReport($event) {
 	$db = connectDB();
 	$query = $db->prepare("SELECT FIRSTNAME, LASTNAME, TITLE, NAME
@@ -100,23 +111,23 @@ function getReport($event) {
 function setPersonToBoat($idperson, $idboat, $event) {
 	$db = connectDB();
 
-	if($idboat != null) { 
+	if($idboat != null) {
 
 		// Check if boat is has place for job
 		$query = $db->prepare("SELECT  CAPACITY - (SELECT COUNT(*)
-													FROM person 
-													WHERE FIJOB=(SELECT FIJOB 
-																FROM person 
-																WHERE IDPERSON=?) 
+													FROM person
+													WHERE FIJOB=(SELECT FIJOB
+																FROM person
+																WHERE IDPERSON=?)
 													AND FIBOAT=?) AS a
 								FROM capacity
 								WHERE FIBOAT=?
-								AND FIJOB=(SELECT FIJOB 
-											FROM person 
+								AND FIJOB=(SELECT FIJOB
+											FROM person
 											WHERE IDPERSON=?)");
 		$query->execute(array($idperson, $idboat, $idboat, $idperson));
 		$row = $query->fetch(PDO::FETCH_ASSOC);
-		if($row["a"] <= 0) {  
+		if($row["a"] <= 0) {
 			return 10;
 		}
 
@@ -232,13 +243,13 @@ function addEvent($name, $date) {
 
 function date_german2mysql($date) {
     $d    =    explode(".",$date);
-    
+
     return    sprintf("%04d-%02d-%02d", $d[2], $d[1], $d[0]);
 }
 
 function date_mysql2german($date) {
     $d    =    explode("-",$date);
-    
+
     return    sprintf("%02d.%02d.%04d", $d[2], $d[1], $d[0]);
 }
 

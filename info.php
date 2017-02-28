@@ -6,7 +6,7 @@ if(isset($_GET["get"])) {
 	$get = $_GET["get"];
 	$event = $_GET["event"];
 	if($get === "init") {
-		echo json_encode(array("boat" => getBoat($event), "person" => getPerson($event)));
+		echo json_encode(array("boat" => getBoat($event), "person" => getPerson($event), "eventinfo" => getEventName($event)));
 	}
 	else if($get === "event") {
 		echo json_encode(getEvent());

@@ -92,7 +92,12 @@ $(document).ready(function() {
             //end boatlist
 
             //begin personlist
-            $(".nav-content").append('<i class="fa fa-bars fa-2x home subtitle feedback" aria-hidden="true"></i>'); //Menu Icon
+            $(".nav-content").append('<i class="fa fa-bars fa-2x home subtitle feedback" aria-hidden="true"></i>'+
+																			'<span class="eventinfo" >'+
+																				'<span>'+data.eventinfo.NAME+'</span>'+
+																				'<br />'+
+																				'<i class="subtitle" style="font-size: 11px;" >'+data.eventinfo.DATE+'</i>'+
+																			'</span>'); //Menu Icon
             $(".home").click(Menu);
             $.each(data.person, function(key, value) {
                 if (!$('#job-' + value.IDJOB).exists()) {

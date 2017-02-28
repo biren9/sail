@@ -363,3 +363,9 @@ body.loading .modal {
 .button:hover {
     color: #FF5722;
 }
+
+.eventinfo {
+    float: right;
+    margin: 10px 30px;
+    text-align: right;
+}
