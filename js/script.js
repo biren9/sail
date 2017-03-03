@@ -54,7 +54,7 @@ $(document).ready(function() {
 
             //cleanup
             $("#boat").empty();
-            $(".nav-content").empty();
+            $(".nav-content").empty(); // TODO animation
 
             //begin boatlist
             $.each(data.boat, function(outKey, outValue) {
@@ -457,6 +457,24 @@ $(document).ready(function() {
             } else if (e === "CSV") {
                 content += '<div class="col-md-2"></div>' +
 				                    	'<div class="col-md-8">' +
+                                '<h4>Format:</h4>'+
+                                '<br />'+
+                                '<span class="csvsample" >Lastname ; </span>'+
+                                '<span class="csvsample" >Firstname ; </span>'+
+                                '<span class="csvsample" >Job</span>'+
+                                '<br />'+
+                                '<span class="csvsample" ><span class="placeholdercsv" >__________</span> ; </span>'+
+                                '<span class="csvsample" ><span class="placeholdercsv" >__________</span> ; </span>'+
+                                '<span class="csvsample" >Skipper</span>'+
+                                '<br />'+
+                                '<span class="csvsample" ><span class="placeholdercsv" >__________</span> ; </span>'+
+                                '<span class="csvsample" ><span class="placeholdercsv" >__________</span> ; </span>'+
+                                '<span class="csvsample" >Co-Skipper</span>'+
+                                '<br />'+
+                                '<span class="csvsample" ><span class="placeholdercsv" >__________</span> ; </span>'+
+                                '<span class="csvsample" ><span class="placeholdercsv" >__________</span> ; </span>'+
+                                '<span class="csvsample" >Crew</span>'+
+                                '<br />'+
 				                    		'<form class="addCsvForm" >' +
 				                    			'<span class="btn btn-default btn-file">' +
 				                    				'Browse <input class="csvUpload button" type="file">' +
@@ -630,7 +648,7 @@ $(document).ready(function() {
         //$("#boat").empty();
 
         //$(".modalContent").addClass('modal'); //Loading screen
-        $(".nav-content").empty();
+        $(".nav-content").empty();// TODO animation
         $(".vcontent").empty(); //html("<div class='screensaver'></div>")
 
         $.getJSON("info.php", {

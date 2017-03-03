@@ -517,3 +517,12 @@ input:focus~.highlight, select:focus~.highlight {
         background: transparent;
     }
 }
+
+.csvsample {
+  display: inline-block;
+  width: 33.33%
+}
+
+.placeholdercsv {
+  opacity: 0.1;
+}
