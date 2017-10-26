@@ -11,7 +11,7 @@ function getPerson($event) {
 							INNER JOIN job
 							ON job.IDJOB = person.FIJOB
 							WHERE person.FIEVENT = ?
-							ORDER BY IDJOB"); //  or 1=1 check error message
+							ORDER BY POSITION, FIRSTNAME, LASTNAME"); //  or 1=1 check error message
 	$query->execute(array($event));
 	$row = $query->fetchAll(PDO::FETCH_ASSOC);
 
