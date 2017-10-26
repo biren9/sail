@@ -1,5 +1,5 @@
 <?php function connectDB() {
-	return new PDO('mysql:host=localhost;dbname=sail;charset=utf8mb4', 'sail', 'HMRwnVRMjFG6vc2q');
+	return new PDO('mysql:host=localhost;dbname=<DATABASE>;charset=utf8mb4', '<USER>', '<PASSWORD>');
 }
 
 function getPerson($event) {
